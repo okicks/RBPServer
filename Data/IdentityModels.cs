@@ -1,5 +1,7 @@
-﻿using System.Security.Claims;
+﻿using System.Data.Entity;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -29,5 +31,12 @@ namespace RBPServer.Models
         {
             return new ApplicationDbContext();
         }
+
+        public DbSet<Liquor> Liquors { get; set; }
+        public DbSet<LiquorRating> LiquorRatings { get; set; }
+        public DbSet<FavoriteLiquor> FavoriteLiquors { get; set; }
+        public DbSet<Ingredient> Ingredients { get; set; }
+        public DbSet<Recipe> Recipes { get; set; }
+        public DbSet<RecipeRating> RecipeRatings { get; set; }
     }
 }
