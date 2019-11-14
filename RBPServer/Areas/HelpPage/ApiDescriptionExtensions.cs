@@ -12,8 +12,12 @@ namespace RBPServer.Areas.HelpPage
         /// </summary>
         /// <param name="description">The <see cref="ApiDescription"/>.</param>
         /// <returns>The ID as a string.</returns>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Globalization", "CA1305:Specify IFormatProvider", Justification = "Stupid")]
         public static string GetFriendlyId(this ApiDescription description)
         {
+            if (description == null)
+                throw new ArgumentNullException(nameof(description));
+
             string path = description.RelativePath;
             string[] urlParts = path.Split('?');
             string localPath = urlParts[0];

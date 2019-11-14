@@ -3,16 +3,19 @@
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
+    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    internal sealed class Configuration : DbMigrationsConfiguration<RBPServer.Models.ApplicationDbContext>
+    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", MessageId = "Stupid")]
+    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
     {
+
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(RBPServer.Models.ApplicationDbContext context)
+        protected override void Seed(ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

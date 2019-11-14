@@ -14,22 +14,25 @@ namespace RBPServer.Areas.HelpPage
     /// </summary>
     public class XmlDocumentationProvider : IDocumentationProvider, IModelDocumentationProvider
     {
-        private XPathNavigator _documentNavigator;
+        private readonly XPathNavigator _documentNavigator;
         private const string TypeExpression = "/doc/members/member[@name='T:{0}']";
         private const string MethodExpression = "/doc/members/member[@name='M:{0}']";
         private const string PropertyExpression = "/doc/members/member[@name='P:{0}']";
         private const string FieldExpression = "/doc/members/member[@name='F:{0}']";
         private const string ParameterExpression = "param[@name='{0}']";
 
+
         /// <summary>
         /// Initializes a new instance of the <see cref="XmlDocumentationProvider"/> class.
         /// </summary>
         /// <param name="documentPath">The physical path to XML document.</param>
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA3075:Insecure DTD processing in XML", Justification = "Stupid")]
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Security", "CA5372:Use XmlReader For XPathDocument", Justification = "Stupid")]
         public XmlDocumentationProvider(string documentPath)
         {
             if (documentPath == null)
             {
-                throw new ArgumentNullException("documentPath");
+                throw new ArgumentNullException(nameof(documentPath));
             }
             XPathDocument xpath = new XPathDocument(documentPath);
             _documentNavigator = xpath.CreateNavigator();
@@ -37,6 +40,9 @@ namespace RBPServer.Areas.HelpPage
 
         public string GetDocumentation(HttpControllerDescriptor controllerDescriptor)
         {
+            if (controllerDescriptor == null)
+                throw new ArgumentNullException(nameof(controllerDescriptor));
+
             XPathNavigator typeNode = GetTypeNode(controllerDescriptor.ControllerType);
             return GetTagValue(typeNode, "summary");
         }
@@ -49,8 +55,7 @@ namespace RBPServer.Areas.HelpPage
 
         public virtual string GetDocumentation(HttpParameterDescriptor parameterDescriptor)
         {
-            ReflectedHttpParameterDescriptor reflectedParameterDescriptor = parameterDescriptor as ReflectedHttpParameterDescriptor;
-            if (reflectedParameterDescriptor != null)
+            if (parameterDescriptor is ReflectedHttpParameterDescriptor reflectedParameterDescriptor)
             {
                 XPathNavigator methodNode = GetMethodNode(reflectedParameterDescriptor.ActionDescriptor);
                 if (methodNode != null)
@@ -75,6 +80,9 @@ namespace RBPServer.Areas.HelpPage
 
         public string GetDocumentation(MemberInfo member)
         {
+            if (member == null)
+                throw new ArgumentNullException(nameof(member));
+
             string memberName = String.Format(CultureInfo.InvariantCulture, "{0}.{1}", GetTypeName(member.DeclaringType), member.Name);
             string expression = member.MemberType == MemberTypes.Field ? FieldExpression : PropertyExpression;
             string selectExpression = String.Format(CultureInfo.InvariantCulture, expression, memberName);
@@ -90,8 +98,7 @@ namespace RBPServer.Areas.HelpPage
 
         private XPathNavigator GetMethodNode(HttpActionDescriptor actionDescriptor)
         {
-            ReflectedHttpActionDescriptor reflectedActionDescriptor = actionDescriptor as ReflectedHttpActionDescriptor;
-            if (reflectedActionDescriptor != null)
+            if (actionDescriptor is ReflectedHttpActionDescriptor reflectedActionDescriptor)
             {
                 string selectExpression = String.Format(CultureInfo.InvariantCulture, MethodExpression, GetMemberName(reflectedActionDescriptor.MethodInfo));
                 return _documentNavigator.SelectSingleNode(selectExpression);

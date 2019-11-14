@@ -1,12 +1,16 @@
-﻿using System.Web;
+﻿using System;
+using System.Web;
 using System.Web.Mvc;
 
 namespace RBPServer
 {
-    public class FilterConfig
+    public static class FilterConfig
     {
         public static void RegisterGlobalFilters(GlobalFilterCollection filters)
         {
+            if (filters == null)
+                throw new ArgumentNullException(nameof(filters));
+
             filters.Add(new HandleErrorAttribute());
         }
     }

@@ -9,6 +9,8 @@ namespace RBPServer.Models
     {
         public string Name { get; set; }
 
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Design", "CA1056:Uri properties should not be strings", Justification = "Stupid")]
         public string Url { get; set; }
 
         public string State { get; set; }

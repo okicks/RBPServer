@@ -13,6 +13,9 @@ namespace RBPServer.Results
     {
         public ChallengeResult(string loginProvider, ApiController controller)
         {
+            if (controller == null)
+                throw new ArgumentNullException(nameof(controller));
+
             LoginProvider = loginProvider;
             Request = controller.Request;
         }
@@ -24,8 +27,10 @@ namespace RBPServer.Results
         {
             Request.GetOwinContext().Authentication.Challenge(LoginProvider);
 
-            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Unauthorized);
-            response.RequestMessage = Request;
+            HttpResponseMessage response = new HttpResponseMessage(HttpStatusCode.Unauthorized)
+            {
+                RequestMessage = Request
+            };
             return Task.FromResult(response);
         }
     }

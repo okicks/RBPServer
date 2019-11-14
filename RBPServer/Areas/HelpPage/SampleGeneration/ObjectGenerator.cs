@@ -32,6 +32,9 @@ namespace RBPServer.Areas.HelpPage
         /// <returns>An object of the given type.</returns>
         public object GenerateObject(Type type)
         {
+            if (type == null)
+                throw new ArgumentNullException(nameof(type));
+
             return GenerateObject(type, new Dictionary<Type, object>());
         }
 
@@ -339,9 +342,7 @@ namespace RBPServer.Areas.HelpPage
 
         private static object GenerateComplexObject(Type type, Dictionary<Type, object> createdObjectReferences)
         {
-            object result = null;
-
-            if (createdObjectReferences.TryGetValue(type, out result))
+            if (createdObjectReferences.TryGetValue(type, out object result))
             {
                 // The object has been created already, just return it. This will handle the circular reference case.
                 return result;
@@ -360,7 +361,7 @@ namespace RBPServer.Areas.HelpPage
                     return null;
                 }
 
-                result = defaultCtor.Invoke(new object[0]);
+                result = defaultCtor.Invoke(Array.Empty<object>());
             }
             createdObjectReferences.Add(type, result);
             SetPublicProperties(type, result, createdObjectReferences);

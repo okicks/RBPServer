@@ -12,6 +12,9 @@ namespace RBPServer
     {
         public static void Register(HttpConfiguration config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             // Web API configuration and services
             // Configure Web API to use only bearer token authentication.
             config.SuppressDefaultHostAuthentication();
