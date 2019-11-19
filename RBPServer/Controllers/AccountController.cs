@@ -329,9 +329,22 @@ namespace RBPServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+            IdentityResult result;
+            using (var context = new ApplicationDbContext())
+            {
+                var roleStore = new RoleStore<IdentityRole>(context);
+                var roleManager = new RoleManager<IdentityRole>(roleStore);
 
-            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
+                await roleManager.CreateAsync(new IdentityRole() { Name = "Administrator" });
+
+                var userStore = new UserStore<ApplicationUser>(context);
+                var userManager = new UserManager<ApplicationUser>(userStore);
+
+                var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
+
+                result = await UserManager.CreateAsync(user, model.Password);
+                await userManager.AddToRoleAsync(user.Id, "Administrator");
+            }
 
             if (!result.Succeeded)
             {
@@ -491,5 +504,7 @@ namespace RBPServer.Controllers
         }
 
         #endregion
+
+
     }
 }

@@ -63,6 +63,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Recipe\RecipeCreate.cs" />
+    <Compile Include="Recipe\RecipeDetail.cs" />
+    <Compile Include="Recipe\RecipeEdit.cs" />
+    <Compile Include="Recipe\RecipeListItems.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
