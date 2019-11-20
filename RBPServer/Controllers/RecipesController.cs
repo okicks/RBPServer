@@ -6,9 +6,8 @@ using System.Net.Http;
 using System.Web.Http;
 using Microsoft.AspNet.Identity;
 using Models.Recipe;
-using Services;
 
-namespace RBPServer.Controllers
+namespace Services
 {
     [Authorize]
     public class RecipesController : ApiController
