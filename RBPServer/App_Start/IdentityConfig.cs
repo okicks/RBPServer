@@ -25,7 +25,7 @@ namespace RBPServer
 
             var manager = new ApplicationUserManager(tmp);
 
-            tmp.Dispose();
+            //tmp.Dispose();
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
