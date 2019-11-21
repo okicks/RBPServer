@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Data;
 using Models;
 using Models.Recipe;
-using RBPServer.Models;
 
 namespace Services
 {

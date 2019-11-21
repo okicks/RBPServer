@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
@@ -17,5 +18,9 @@ namespace Data
 
         [Required]
         public string Description { get; set; }
+
+        [Required]
+        [DisplayName("Rating")]
+        public double AverageRating { get; set; }
     }
 }

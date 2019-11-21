@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
@@ -19,19 +20,17 @@ namespace RBPServer.Providers
 
         public ApplicationOAuthProvider(string publicClientId)
         {
-            if (publicClientId == null)
-            {
-                throw new ArgumentNullException("publicClientId");
-            }
-
-            _publicClientId = publicClientId;
+            _publicClientId = publicClientId ?? throw new ArgumentNullException(nameof(publicClientId));
         }
 
         public override async Task GrantResourceOwnerCredentials(OAuthGrantResourceOwnerCredentialsContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             var userManager = context.OwinContext.GetUserManager<ApplicationUserManager>();
 
-            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password);
+            ApplicationUser user = await userManager.FindAsync(context.UserName, context.Password).ConfigureAwait(false);
 
             if (user == null)
             {
@@ -40,9 +39,9 @@ namespace RBPServer.Providers
             }
 
             ClaimsIdentity oAuthIdentity = await user.GenerateUserIdentityAsync(userManager,
-               OAuthDefaults.AuthenticationType);
+               OAuthDefaults.AuthenticationType).ConfigureAwait(false);
             ClaimsIdentity cookiesIdentity = await user.GenerateUserIdentityAsync(userManager,
-                CookieAuthenticationDefaults.AuthenticationType);
+                CookieAuthenticationDefaults.AuthenticationType).ConfigureAwait(false);
 
             AuthenticationProperties properties = CreateProperties(user.UserName);
             AuthenticationTicket ticket = new AuthenticationTicket(oAuthIdentity, properties);
@@ -52,6 +51,9 @@ namespace RBPServer.Providers
 
         public override Task TokenEndpoint(OAuthTokenEndpointContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             foreach (KeyValuePair<string, string> property in context.Properties.Dictionary)
             {
                 context.AdditionalResponseParameters.Add(property.Key, property.Value);
@@ -62,6 +64,9 @@ namespace RBPServer.Providers
 
         public override Task ValidateClientAuthentication(OAuthValidateClientAuthenticationContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             // Resource owner password credentials does not provide a client ID.
             if (context.ClientId == null)
             {
@@ -73,6 +78,9 @@ namespace RBPServer.Providers
 
         public override Task ValidateClientRedirectUri(OAuthValidateClientRedirectUriContext context)
         {
+            if (context == null)
+                throw new ArgumentNullException(nameof(context));
+
             if (context.ClientId == _publicClientId)
             {
                 Uri expectedRootUri = new Uri(context.Request.Uri, "/");

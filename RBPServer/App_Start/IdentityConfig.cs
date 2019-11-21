@@ -1,8 +1,11 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using Data;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin;
+using Microsoft.Owin.Security.DataProtection;
 using RBPServer.Models;
 
 namespace RBPServer
@@ -18,7 +21,11 @@ namespace RBPServer
 
         public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
         {
-            var manager = new ApplicationUserManager(new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>()));
+            var tmp = new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>());
+
+            var manager = new ApplicationUserManager(tmp);
+
+            //tmp.Dispose();
             // Configure validation logic for usernames
             manager.UserValidator = new UserValidator<ApplicationUser>(manager)
             {
@@ -34,7 +41,12 @@ namespace RBPServer
                 RequireLowercase = true,
                 RequireUppercase = true,
             };
+
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
+
             var dataProtectionProvider = options.DataProtectionProvider;
+
             if (dataProtectionProvider != null)
             {
                 manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));

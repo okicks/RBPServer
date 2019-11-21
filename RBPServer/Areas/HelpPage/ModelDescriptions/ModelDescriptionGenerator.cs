@@ -84,13 +84,13 @@ namespace RBPServer.Areas.HelpPage.ModelDescriptions
             { typeof(Boolean), "boolean" },
         };
 
-        private Lazy<IModelDocumentationProvider> _documentationProvider;
+        private readonly Lazy<IModelDocumentationProvider> _documentationProvider;
 
         public ModelDescriptionGenerator(HttpConfiguration config)
         {
             if (config == null)
             {
-                throw new ArgumentNullException("config");
+                throw new ArgumentNullException(nameof(config));
             }
 
             _documentationProvider = new Lazy<IModelDocumentationProvider>(() => config.Services.GetDocumentationProvider() as IModelDocumentationProvider);
@@ -111,7 +111,7 @@ namespace RBPServer.Areas.HelpPage.ModelDescriptions
         {
             if (modelType == null)
             {
-                throw new ArgumentNullException("modelType");
+                throw new ArgumentNullException(nameof(modelType));
             }
 
             Type underlyingType = Nullable.GetUnderlyingType(modelType);
@@ -120,9 +120,8 @@ namespace RBPServer.Areas.HelpPage.ModelDescriptions
                 modelType = underlyingType;
             }
 
-            ModelDescription modelDescription;
             string modelName = ModelNameHelper.GetModelName(modelType);
-            if (GeneratedModels.TryGetValue(modelName, out modelDescription))
+            if (GeneratedModels.TryGetValue(modelName, out ModelDescription modelDescription))
             {
                 if (modelType != modelDescription.ModelType)
                 {
@@ -251,8 +250,7 @@ namespace RBPServer.Areas.HelpPage.ModelDescriptions
 
         private string CreateDefaultDocumentation(Type type)
         {
-            string documentation;
-            if (DefaultTypeDocumentation.TryGetValue(type, out documentation))
+            if (DefaultTypeDocumentation.TryGetValue(type, out string documentation))
             {
                 return documentation;
             }
@@ -271,8 +269,7 @@ namespace RBPServer.Areas.HelpPage.ModelDescriptions
             IEnumerable<Attribute> attributes = property.GetCustomAttributes();
             foreach (Attribute attribute in attributes)
             {
-                Func<object, string> textGenerator;
-                if (AnnotationTextGenerator.TryGetValue(attribute.GetType(), out textGenerator))
+                if (AnnotationTextGenerator.TryGetValue(attribute.GetType(), out Func<object, string> textGenerator))
                 {
                     annotations.Add(
                         new ParameterAnnotation

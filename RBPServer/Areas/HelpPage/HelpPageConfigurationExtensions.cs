@@ -27,6 +27,9 @@ namespace RBPServer.Areas.HelpPage
         /// <param name="documentationProvider">The documentation provider.</param>
         public static void SetDocumentationProvider(this HttpConfiguration config, IDocumentationProvider documentationProvider)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             config.Services.Replace(typeof(IDocumentationProvider), documentationProvider);
         }
 
@@ -178,6 +181,9 @@ namespace RBPServer.Areas.HelpPage
         /// <returns>The help page sample generator.</returns>
         public static HelpPageSampleGenerator GetHelpPageSampleGenerator(this HttpConfiguration config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             return (HelpPageSampleGenerator)config.Properties.GetOrAdd(
                 typeof(HelpPageSampleGenerator),
                 k => new HelpPageSampleGenerator());
@@ -190,6 +196,9 @@ namespace RBPServer.Areas.HelpPage
         /// <param name="sampleGenerator">The help page sample generator.</param>
         public static void SetHelpPageSampleGenerator(this HttpConfiguration config, HelpPageSampleGenerator sampleGenerator)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             config.Properties.AddOrUpdate(
                 typeof(HelpPageSampleGenerator),
                 k => sampleGenerator,
@@ -203,6 +212,9 @@ namespace RBPServer.Areas.HelpPage
         /// <returns>The <see cref="ModelDescriptionGenerator"/></returns>
         public static ModelDescriptionGenerator GetModelDescriptionGenerator(this HttpConfiguration config)
         {
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             return (ModelDescriptionGenerator)config.Properties.GetOrAdd(
                 typeof(ModelDescriptionGenerator),
                 k => InitializeModelDescriptionGenerator(config));
@@ -218,9 +230,11 @@ namespace RBPServer.Areas.HelpPage
         /// </returns>
         public static HelpPageApiModel GetHelpPageApiModel(this HttpConfiguration config, string apiDescriptionId)
         {
-            object model;
+            if (config == null)
+                throw new ArgumentNullException(nameof(config));
+
             string modelId = ApiModelPrefix + apiDescriptionId;
-            if (!config.Properties.TryGetValue(modelId, out model))
+            if (!config.Properties.TryGetValue(modelId, out object model))
             {
                 Collection<ApiDescription> apiDescriptions = config.Services.GetApiExplorer().ApiDescriptions;
                 ApiDescription apiDescription = apiDescriptions.FirstOrDefault(api => String.Equals(api.GetFriendlyId(), apiDescriptionId, StringComparison.OrdinalIgnoreCase));

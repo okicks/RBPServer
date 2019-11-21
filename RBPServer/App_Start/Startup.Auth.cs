@@ -10,6 +10,7 @@ using Microsoft.Owin.Security.OAuth;
 using Owin;
 using RBPServer.Providers;
 using RBPServer.Models;
+using Data;
 
 namespace RBPServer
 {
@@ -19,7 +20,9 @@ namespace RBPServer
 
         public static string PublicClientId { get; private set; }
 
+
         // For more information on configuring authentication, please visit https://go.microsoft.com/fwlink/?LinkId=301864
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Performance", "CA1822:Mark members as static", Justification = "Stupid")]
         public void ConfigureAuth(IAppBuilder app)
         {
             // Configure the db context and user manager to use a single instance per request
