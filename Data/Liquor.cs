@@ -39,5 +39,8 @@ namespace Data
         [Required]
         public string Origin { get; set; }
 
+        [Required]
+        public double AverageRating { get; set; }
+
     }
 }

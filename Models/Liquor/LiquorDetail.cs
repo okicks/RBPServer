@@ -10,8 +10,6 @@ namespace Models.Liquor
 {
     public class LiquorDetail
     {
-        public int Id { get; set; }
-
         public string Name { get; set; }
 
         public LiquorCategory Category { get; set; }
