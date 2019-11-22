@@ -92,6 +92,10 @@
     <Compile Include="Migrations\201911120033204_InitialMigration.designer.cs">
       <DependentUpon>201911120033204_InitialMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911220115170_Swagger.cs" />
+    <Compile Include="Migrations\201911220115170_Swagger.designer.cs">
+      <DependentUpon>201911220115170_Swagger.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RecipeRating.cs" />
     <Compile Include="Recipe.cs" />
@@ -105,6 +109,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\201911120033204_InitialMigration.resx">
       <DependentUpon>201911120033204_InitialMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911220115170_Swagger.resx">
+      <DependentUpon>201911220115170_Swagger.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
