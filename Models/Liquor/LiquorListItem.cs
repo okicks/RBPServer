@@ -11,7 +11,5 @@ namespace Models.Liquor
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        [DisplayName ("Rating")]
-        public double AverageRating { get; set; }
     }
 }
