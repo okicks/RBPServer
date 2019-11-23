@@ -11,6 +11,7 @@ using Services;
 
 namespace RBPServer.Controllers
 {
+    [Authorize]
     public class LiquorController : ApiController
     {
         public IHttpActionResult GetAll()
