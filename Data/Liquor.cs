@@ -40,7 +40,7 @@ namespace Data
         public string Origin { get; set; }
 
         [Required]
-        [DisplayName("Rating")]
         public double AverageRating { get; set; }
+
     }
 }
