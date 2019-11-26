@@ -21,6 +21,13 @@ namespace RBPServer.Controllers
             return Ok(liquors);
         }
 
+        public IHttpActionResult GetAllFavorites()
+        {
+            LiquorService liquorService = CreateLiquorService();
+            var faveliquors = liquorService.GetFaveLiquors();
+            return Ok(faveliquors);
+        }
+
         public IHttpActionResult GetLiquorById(int id)
         {
             LiquorService liquorService = CreateLiquorService();

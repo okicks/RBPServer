@@ -19,8 +19,6 @@ namespace Data
         [Required]
         public string Description { get; set; }
 
-        [Required]
-        [DisplayName("Rating")]
-        public double AverageRating { get; set; }
+        public bool IsStarred { get; set; }
     }
 }

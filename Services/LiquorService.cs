@@ -1,4 +1,5 @@
 ﻿using Data;
+using Models.Favorites;
 using Models.Liquor;
 using System;
 using System.Collections.Generic;
@@ -51,6 +52,25 @@ namespace Services
             }
         }
 
+        public IEnumerable<FavoriteLiquorsListItem> GetFaveLiquors()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var query =
+                    ctx
+                    .FavoriteLiquors
+                    .Select(e =>
+                    new FavoriteLiquorsListItem
+                    {
+                        Id = e.Id,
+                        Favoriter = e.Favoriter,
+                        LiquorName = e.Liquor.Name,
+                        IsStarred = e.IsStarred
+                    });
+
+                return query.ToArray(); 
+            }
+        }
         public LiquorDetail GetLiquorById(int id)
         {
             using (var ctx = new ApplicationDbContext())
