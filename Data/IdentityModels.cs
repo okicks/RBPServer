@@ -162,7 +162,7 @@ namespace Data
 
             const string name = "olihu822@gmail.com";
             const string password = "Password123!";
-            const string roleName = "Admin";
+            const string roleName = "SuperAdmin";
 
             var role = roleManager.FindByName(roleName);
             if (role == null)
