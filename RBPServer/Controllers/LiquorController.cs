@@ -12,8 +12,10 @@ using Services;
 namespace RBPServer.Controllers
 {
     [Authorize]
+    [RoutePrefix("api/Liquors")]
     public class LiquorController : ApiController
     {
+        [Route ("AllLiquors")]
         public IHttpActionResult GetAll()
         {
             LiquorService liquorService = CreateLiquorService();
@@ -21,6 +23,7 @@ namespace RBPServer.Controllers
             return Ok(liquors);
         }
 
+        [Route("Favorites")]
         public IHttpActionResult GetAllFavorites()
         {
             LiquorService liquorService = CreateLiquorService();
@@ -34,7 +37,7 @@ namespace RBPServer.Controllers
             var liquors = liquorService.GetLiquorById(id);
             return Ok(liquors);
         }
-
+        [Route("Create")]
         public IHttpActionResult Post(LiquorCreate liquor)
         {
             if (!ModelState.IsValid)
@@ -48,6 +51,7 @@ namespace RBPServer.Controllers
             return Ok();
         }
 
+        [Route("Edit")]
         public IHttpActionResult Put(LiquorEdit liquor)
         {
             if (!ModelState.IsValid)
@@ -60,7 +64,7 @@ namespace RBPServer.Controllers
 
             return Ok();
         }
-
+        [Route("Delete")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateLiquorService();
