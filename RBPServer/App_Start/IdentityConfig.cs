@@ -1,72 +1,57 @@
-﻿//using System;
-//using System.Data.Entity;
-//using System.Threading.Tasks;
-//using System.Web;
-//using Data;
-//using Microsoft.AspNet.Identity;
-//using Microsoft.AspNet.Identity.EntityFramework;
-//using Microsoft.AspNet.Identity.Owin;
-//using Microsoft.Owin;
-//using Microsoft.Owin.Security.DataProtection;
-//using RBPServer.Models;
+﻿using System;
+using System.Threading.Tasks;
+using Data;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
+using Microsoft.AspNet.Identity.Owin;
+using Microsoft.Owin;
+using Microsoft.Owin.Security.DataProtection;
+using RBPServer.Models;
 
 //namespace RBPServer
 //{
 //    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
+    public class ApplicationUserManager : UserManager<ApplicationUser>
+    {
+        public ApplicationUserManager(IUserStore<ApplicationUser> store)
+            : base(store)
+        {
+        }
 
-//    public class ApplicationRoleManager : RoleManager<ApplicationRole>
-//    {
-//        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore) : base(roleStore)
-//        {
-//        }
+        public static ApplicationUserManager Create(IdentityFactoryOptions<ApplicationUserManager> options, IOwinContext context)
+        {
+            var tmp = new UserStore<ApplicationUser>(context.Get<ApplicationDbContext>());
 
-//        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-//        {
-//            return new ApplicationRoleManager(new ApplicationRoleStore(context.Get<ApplicationDbContext>()));
-//        }
-//    }
+            var manager = new ApplicationUserManager(tmp);
 
-//    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
-//    {
-//        protected override void Seed(ApplicationDbContext context)
-//        {
-//            InitializeIdentityForEF(context);
-//            base.Seed(context);
-//        }
+            //tmp.Dispose();
+            // Configure validation logic for usernames
+            manager.UserValidator = new UserValidator<ApplicationUser>(manager)
+            {
+                AllowOnlyAlphanumericUserNames = false,
+                RequireUniqueEmail = true
+            };
+            // Configure validation logic for passwords
+            manager.PasswordValidator = new PasswordValidator
+            {
+                RequiredLength = 6,
+                RequireNonLetterOrDigit = true,
+                RequireDigit = true,
+                RequireLowercase = true,
+                RequireUppercase = true,
+            };
 
-//        public static void InitializeIdentityForEF(ApplicationDbContext db)
-//        {
-//            var userManager = HttpContext.Current
-//                .GetOwinContext().GetUserManager<ApplicationUserManager>();
+            if (options == null)
+                throw new ArgumentNullException(nameof(options));
 
-//            var roleManager = HttpContext.Current
-//                .GetOwinContext().Get<ApplicationRoleManager>();
+            var dataProtectionProvider = options.DataProtectionProvider;
 
-//            const string name = "olihu822@gmail.com";
-//            const string password = "Password123!";
-//            const string roleName = "Admin";
-
-//            var role = roleManager.FindByName(roleName);
-//            if (role == null)
-//            {
-//                role = new ApplicationRole(roleName);
-//                var roleResult = roleManager.Create(role);
-//            }
-
-//            var user = userManager.FindByName(name);
-//            if (user == null)
-//            {
-//                user = new ApplicationUser { UserName = name, Email = name };
-//                var result = userManager.Create(user, password);
-//                result = userManager.SetLockoutEnabled(user.Id, false);
-//            }
-
-//            var rolesForUser = userManager.GetRoles(user.Id);
-//            if (!rolesForUser.Contains(role.Name))
-//            {
-//                var result = userManager.AddToRole(user.Id, role.Name);
-//            }
-//        }
-//    }
-//}
+            if (dataProtectionProvider != null)
+            {
+                manager.UserTokenProvider = new DataProtectorTokenProvider<ApplicationUser>(dataProtectionProvider.Create("ASP.NET Identity"));
+            }
+            return manager;
+        }
+    }
+}
