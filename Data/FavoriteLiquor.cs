@@ -21,5 +21,7 @@ namespace Data
         public int LiquorId { get; set; }
 
         public virtual Liquor Liquor { get; set; }
+
+        public bool IsStarred { get; set; }
     }
 }

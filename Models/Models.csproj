@@ -63,6 +63,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Favorites\FavoriteLiquorsListItem.cs" />
     <Compile Include="Liquor\LiquorCreate.cs" />
     <Compile Include="Liquor\LiquorDetail.cs" />
     <Compile Include="Liquor\LiquorEdit.cs" />
