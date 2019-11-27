@@ -1,72 +1,72 @@
-﻿using System;
-using System.Data.Entity;
-using System.Threading.Tasks;
-using System.Web;
-using Data;
-using Microsoft.AspNet.Identity;
-using Microsoft.AspNet.Identity.EntityFramework;
-using Microsoft.AspNet.Identity.Owin;
-using Microsoft.Owin;
-using Microsoft.Owin.Security.DataProtection;
-using RBPServer.Models;
+﻿//using System;
+//using System.Data.Entity;
+//using System.Threading.Tasks;
+//using System.Web;
+//using Data;
+//using Microsoft.AspNet.Identity;
+//using Microsoft.AspNet.Identity.EntityFramework;
+//using Microsoft.AspNet.Identity.Owin;
+//using Microsoft.Owin;
+//using Microsoft.Owin.Security.DataProtection;
+//using RBPServer.Models;
 
-namespace RBPServer
-{
-    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+//namespace RBPServer
+//{
+//    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
-    
-    public class ApplicationRoleManager : RoleManager<ApplicationRole>
-    {
-        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore) : base(roleStore)
-        {
-        }
 
-        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
-        {
-            return new ApplicationRoleManager(new ApplicationRoleStore(context.Get<ApplicationDbContext>()));
-        }
-    }
+//    public class ApplicationRoleManager : RoleManager<ApplicationRole>
+//    {
+//        public ApplicationRoleManager(IRoleStore<ApplicationRole, string> roleStore) : base(roleStore)
+//        {
+//        }
 
-    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
-    {
-        protected override void Seed(ApplicationDbContext context)
-        {
-            InitializeIdentityForEF(context);
-            base.Seed(context);
-        }
+//        public static ApplicationRoleManager Create(IdentityFactoryOptions<ApplicationRoleManager> options, IOwinContext context)
+//        {
+//            return new ApplicationRoleManager(new ApplicationRoleStore(context.Get<ApplicationDbContext>()));
+//        }
+//    }
 
-        public static void InitializeIdentityForEF(ApplicationDbContext db)
-        {
-            var userManager = HttpContext.Current
-                .GetOwinContext().GetUserManager<ApplicationUserManager>();
+//    public class ApplicationDbInitializer : DropCreateDatabaseAlways<ApplicationDbContext>
+//    {
+//        protected override void Seed(ApplicationDbContext context)
+//        {
+//            InitializeIdentityForEF(context);
+//            base.Seed(context);
+//        }
 
-            var roleManager = HttpContext.Current
-                .GetOwinContext().Get<ApplicationRoleManager>();
+//        public static void InitializeIdentityForEF(ApplicationDbContext db)
+//        {
+//            var userManager = HttpContext.Current
+//                .GetOwinContext().GetUserManager<ApplicationUserManager>();
 
-            const string name = "olihu822@gmail.com";
-            const string password = "Password123!";
-            const string roleName = "Admin";
+//            var roleManager = HttpContext.Current
+//                .GetOwinContext().Get<ApplicationRoleManager>();
 
-            var role = roleManager.FindByName(roleName);
-            if (role == null)
-            {
-                role = new ApplicationRole(roleName);
-                var roleResult = roleManager.Create(role);
-            }
+//            const string name = "olihu822@gmail.com";
+//            const string password = "Password123!";
+//            const string roleName = "Admin";
 
-            var user = userManager.FindByName(name);
-            if (user == null)
-            {
-                user = new ApplicationUser { UserName = name, Email = name };
-                var result = userManager.Create(user, password);
-                result = userManager.SetLockoutEnabled(user.Id, false);
-            }
+//            var role = roleManager.FindByName(roleName);
+//            if (role == null)
+//            {
+//                role = new ApplicationRole(roleName);
+//                var roleResult = roleManager.Create(role);
+//            }
 
-            var rolesForUser = userManager.GetRoles(user.Id);
-            if (!rolesForUser.Contains(role.Name))
-            {
-                var result = userManager.AddToRole(user.Id, role.Name);
-            }
-        }
-    }
-}
+//            var user = userManager.FindByName(name);
+//            if (user == null)
+//            {
+//                user = new ApplicationUser { UserName = name, Email = name };
+//                var result = userManager.Create(user, password);
+//                result = userManager.SetLockoutEnabled(user.Id, false);
+//            }
+
+//            var rolesForUser = userManager.GetRoles(user.Id);
+//            if (!rolesForUser.Contains(role.Name))
+//            {
+//                var result = userManager.AddToRole(user.Id, role.Name);
+//            }
+//        }
+//    }
+//}
