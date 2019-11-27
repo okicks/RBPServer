@@ -8,9 +8,9 @@ using Microsoft.Owin;
 using Microsoft.Owin.Security.DataProtection;
 using RBPServer.Models;
 
-//namespace RBPServer
-//{
-//    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
+namespace RBPServer
+{
+    // Configure the application user manager used in this application. UserManager is defined in ASP.NET Identity and is used by the application.
 
     public class ApplicationUserManager : UserManager<ApplicationUser>
     {
