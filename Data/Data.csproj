@@ -139,6 +139,10 @@
     <Compile Include="Migrations\201911260219335_Removed IdentityConfig.designer.cs">
       <DependentUpon>201911260219335_Removed IdentityConfig.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201911270140152_Ratings.cs" />
+    <Compile Include="Migrations\201911270140152_Ratings.designer.cs">
+      <DependentUpon>201911270140152_Ratings.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RecipeRating.cs" />
     <Compile Include="Recipe.cs" />
@@ -161,6 +165,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201911260219335_Removed IdentityConfig.resx">
       <DependentUpon>201911260219335_Removed IdentityConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201911270140152_Ratings.resx">
+      <DependentUpon>201911270140152_Ratings.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

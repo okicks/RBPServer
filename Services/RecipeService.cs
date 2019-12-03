@@ -45,24 +45,42 @@ namespace Services
             }
         }
 
-        public IEnumerable<RecipeListItems> GetRecipes()
+        public IEnumerable<RecipeListItem> GetRecipes()
         {
             using (var ctx = new ApplicationDbContext())
             {
-                var query =
+                var recipeListItems =
                     ctx
                     .Recipes
-                        .Select(e =>
-                            new RecipeListItems
-                            {
-                                Id = e.Id,
-                                Name = e.Name,
-                                Description = e.Description
-                            }
-                            );
-                return query.ToArray();
+                    .Select(e =>
+                        new RecipeListItem
+                        {
+                            Id = e.Id,
+                            Name = e.Name,
+                            Description = e.Description,
+                            RecipeRatings = e.RecipeRatings
+                            //AverageRating = CalculateAverageRating(e.RecipeRatings)
+                        }).ToArray();
+                
+                foreach (var recipe in recipeListItems)
+                {
+                    recipe.AverageRating = CalculateAverageRating(recipe.RecipeRatings);
+                }
+
+                return recipeListItems;
 
             }
+        }
+
+        private double CalculateAverageRating(ICollection<RecipeRating> recipeRatings)
+        {
+            var sum = 0;
+            foreach (var rating in recipeRatings)
+            {
+                sum = rating.Rating + sum;
+            }
+
+            return sum / recipeRatings.Count;
         }
 
         public RecipeDetail GetRecipeById(int id)
