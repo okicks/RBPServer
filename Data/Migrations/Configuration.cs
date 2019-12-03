@@ -3,19 +3,16 @@
     using System;
     using System.Data.Entity;
     using System.Data.Entity.Migrations;
-    using System.Diagnostics.CodeAnalysis;
     using System.Linq;
 
-    [SuppressMessage("Microsoft.Performance", "CA1812:AvoidUninstantiatedInternalClasses", MessageId = "Stupid")]
-    internal sealed class Configuration : DbMigrationsConfiguration<ApplicationDbContext>
+    internal sealed class Configuration : DbMigrationsConfiguration<Data.ApplicationDbContext>
     {
-
         public Configuration()
         {
             AutomaticMigrationsEnabled = false;
         }
 
-        protected override void Seed(ApplicationDbContext context)
+        protected override void Seed(Data.ApplicationDbContext context)
         {
             //  This method will be called after migrating to the latest version.
 

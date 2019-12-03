@@ -14,6 +14,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         Favoriter = c.Guid(nullable: false),
                         LiquorId = c.Int(nullable: false),
+                        IsStarred = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id)
                 .ForeignKey("dbo.Liquors", t => t.LiquorId, cascadeDelete: true)
@@ -28,7 +29,6 @@
                         Category = c.Int(nullable: false),
                         PercentAlcohol = c.Single(nullable: false),
                         Origin = c.String(nullable: false),
-                        AverageRating = c.Double(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             
@@ -53,6 +53,7 @@
                         Id = c.Int(nullable: false, identity: true),
                         Name = c.String(nullable: false),
                         Description = c.String(nullable: false),
+                        IsStarred = c.Boolean(nullable: false),
                     })
                 .PrimaryKey(t => t.Id);
             

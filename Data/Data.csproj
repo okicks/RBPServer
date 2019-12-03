@@ -123,21 +123,9 @@
     <Compile Include="Ingredient.cs" />
     <Compile Include="Liquor.cs" />
     <Compile Include="LiquorRating.cs" />
-    <Compile Include="Migrations\201911120033204_InitialMigration.cs" />
-    <Compile Include="Migrations\201911120033204_InitialMigration.designer.cs">
-      <DependentUpon>201911120033204_InitialMigration.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911212311443_swagger.cs" />
-    <Compile Include="Migrations\201911212311443_swagger.designer.cs">
-      <DependentUpon>201911212311443_swagger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911260051102_Fixed Swagger.cs" />
-    <Compile Include="Migrations\201911260051102_Fixed Swagger.designer.cs">
-      <DependentUpon>201911260051102_Fixed Swagger.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201911260219335_Removed IdentityConfig.cs" />
-    <Compile Include="Migrations\201911260219335_Removed IdentityConfig.designer.cs">
-      <DependentUpon>201911260219335_Removed IdentityConfig.cs</DependentUpon>
+    <Compile Include="Migrations\201912030117365_InitialMigration.cs" />
+    <Compile Include="Migrations\201912030117365_InitialMigration.designer.cs">
+      <DependentUpon>201912030117365_InitialMigration.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RecipeRating.cs" />
@@ -150,21 +138,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Include="Migrations\201911120033204_InitialMigration.resx">
-      <DependentUpon>201911120033204_InitialMigration.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201912030117365_InitialMigration.resx">
+      <DependentUpon>201912030117365_InitialMigration.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911212311443_swagger.resx">
-      <DependentUpon>201911212311443_swagger.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911260051102_Fixed Swagger.resx">
-      <DependentUpon>201911260051102_Fixed Swagger.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201911260219335_Removed IdentityConfig.resx">
-      <DependentUpon>201911260219335_Removed IdentityConfig.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Migrations\201911260050157_Fixed SwaggerConfig\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
