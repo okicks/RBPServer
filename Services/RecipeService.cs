@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Data;
 using Models;
+using Models.Favorites;
 using Models.Recipe;
 
 namespace Services
@@ -50,8 +51,7 @@ namespace Services
             {
                 var query =
                     ctx
-                        .Recipes
-
+                    .Recipes
                         .Select(e =>
                             new RecipeListItems
                             {
