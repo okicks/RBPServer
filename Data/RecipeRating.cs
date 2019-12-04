@@ -23,6 +23,6 @@ namespace Data
         public Guid Rater { get; set; }
 
         [Required]
-        public int Rating { get; set; }
+        public double Rating { get; set; }
     }
 }

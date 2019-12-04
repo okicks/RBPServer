@@ -74,7 +74,7 @@ namespace Services
 
         private double CalculateAverageRating(ICollection<RecipeRating> recipeRatings)
         {
-            var sum = 0;
+            var sum = 0d;
             foreach (var rating in recipeRatings)
             {
                 sum = rating.Rating + sum;

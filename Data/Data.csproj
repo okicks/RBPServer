@@ -127,10 +127,6 @@
     <Compile Include="Migrations\201912030117365_InitialMigration.designer.cs">
       <DependentUpon>201912030117365_InitialMigration.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201911270140152_Ratings.cs" />
-    <Compile Include="Migrations\201911270140152_Ratings.designer.cs">
-      <DependentUpon>201911270140152_Ratings.cs</DependentUpon>
-    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="RecipeRating.cs" />
     <Compile Include="Recipe.cs" />
