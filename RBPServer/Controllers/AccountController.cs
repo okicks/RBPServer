@@ -79,7 +79,7 @@ namespace RBPServer.Controllers
         [Route("ManageInfo")]
         public async Task<ManageInfoViewModel> GetManageInfo(string returnUrl, bool generateState = false)
         {
-            IdentityUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+            ApplicationUser user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
 
             if (user == null)
             {
@@ -88,7 +88,7 @@ namespace RBPServer.Controllers
 
             List<UserLoginInfoViewModel> logins = new List<UserLoginInfoViewModel>();
 
-            foreach (IdentityUserLogin linkedAccount in user.Logins)
+            foreach (ApplicationUserLogin linkedAccount in user.Logins)
             {
                 logins.Add(new UserLoginInfoViewModel
                 {
@@ -329,25 +329,16 @@ namespace RBPServer.Controllers
                 return BadRequest(ModelState);
             }
 
-            IdentityResult result;
-            using (var context = new ApplicationDbContext())
-            {
-                var roleStore = new RoleStore<IdentityRole>(context);
-                var roleManager = new RoleManager<IdentityRole>(roleStore);
-                await roleManager.CreateAsync(new IdentityRole() { Name = "Administrator" });
-            }
-            //var userStore = new UserStore<ApplicationUser>(context);
-            //var userManager = new UserManager<ApplicationUser>(userStore);
-
             var user = new ApplicationUser() { UserName = model.Email, Email = model.Email };
 
-            result = await UserManager.CreateAsync(user, model.Password);
+            IdentityResult result = await UserManager.CreateAsync(user, model.Password);
 
             if (!result.Succeeded)
             {
-                await UserManager.AddToRoleAsync(user.Id, "Administrator");
                 return GetErrorResult(result);
             }
+
+            await UserManager.AddToRoleAsync(user.Id, "User");
 
             return Ok();
         }
