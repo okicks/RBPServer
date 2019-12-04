@@ -74,6 +74,10 @@
     <Compile Include="RecipeService.cs" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Data\Data.csproj">
+      <Project>{5223FAE9-B4CD-4D0E-826E-F5254C51A86C}</Project>
+      <Name>Data</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Models\Models.csproj">
       <Project>{42d3355b-0200-4ca7-9393-74149e327d5d}</Project>
       <Name>Models</Name>
