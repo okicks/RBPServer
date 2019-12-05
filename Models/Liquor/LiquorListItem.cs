@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -11,5 +12,7 @@ namespace Models.Liquor
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        public ICollection<LiquorRating> LiquorRatings { get; set; }
+        public double AverageRating { get; set; }
     }
 }

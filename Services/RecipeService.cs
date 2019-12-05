@@ -58,8 +58,8 @@ namespace Services
                             Id = e.Id,
                             Name = e.Name,
                             Description = e.Description,
-                            RecipeRatings = e.RecipeRatings
-                            //AverageRating = CalculateAverageRating(e.RecipeRatings)
+                            RecipeRatings = e.RecipeRatings,
+                            AverageRating = CalculateAverageRating(e.RecipeRatings)
                         }).ToArray();
                 
                 foreach (var recipe in recipeListItems)
@@ -77,7 +77,7 @@ namespace Services
             var sum = 0d;
             foreach (var rating in recipeRatings)
             {
-                sum = rating.Rating + sum;
+                sum += rating.Rating;
             }
 
             return sum / recipeRatings.Count;

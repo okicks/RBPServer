@@ -36,21 +36,6 @@ namespace Services
             }
         }
 
-        public IEnumerable<LiquorListItem> GetLiquors()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query =
-                    ctx.Liquors
-                    .Select(e => new LiquorListItem
-                    {
-                        Id = e.Id,
-                        Name = e.Name,
-                    });
-
-                return query.ToArray();
-            }
-        }
 
         public IEnumerable<FavoriteLiquorsListItem> GetFaveLiquors()
         {
@@ -68,9 +53,43 @@ namespace Services
                         IsStarred = e.IsStarred
                     });
 
-                return query.ToArray(); 
+                return query.ToArray();
             }
         }
+
+        public IEnumerable<LiquorListItem> GetLiquors()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var liquorListItems =
+                    ctx
+                    .Liquors
+                    .Select(e => new LiquorListItem
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                        AverageRating = AverageLiquorRating(e.LiquorRatings)
+                    }).ToArray();
+
+                foreach (var liquor in liquorListItems)
+                {
+                    liquor.AverageRating = AverageLiquorRating(liquor.LiquorRatings);
+                }
+
+                return liquorListItems;
+            }
+        }
+        private double AverageLiquorRating(ICollection<LiquorRating> liquorRatings)
+        {
+            var sum = 0d;
+            foreach (var rating in liquorRatings)
+            {
+                sum += rating.Rating;
+            }
+
+            return sum / liquorRatings.Count();
+        }
+
         public LiquorDetail GetLiquorById(int id)
         {
             using (var ctx = new ApplicationDbContext())
