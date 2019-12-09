@@ -112,8 +112,11 @@ namespace Services
             using (var ctx = new ApplicationDbContext())
             {
                 var entity =
-                    ctx.Liquors
+                    ctx
+                    .Liquors
                     .Single(e => e.Id == id);
+
+                ctx.Liquors.Remove(entity);
 
                 return ctx.SaveChanges() == 1;
             }

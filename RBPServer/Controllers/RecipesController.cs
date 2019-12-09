@@ -10,9 +10,11 @@ using Services;
 
 namespace RBPServer.Controllers
 {
+    [RoutePrefix ("api/Recipe")]
     [Authorize]
     public class RecipesController : ApiController
     {
+        [Route("AllRecipes")]
         public IHttpActionResult GetAll()
         {
             RecipeService recipeService = CreateRecipeService();
@@ -27,6 +29,7 @@ namespace RBPServer.Controllers
             return Ok(recipe);
         }
 
+        [Route("Create")]
         public IHttpActionResult Post(RecipeCreate recipe)
         {
             if (!ModelState.IsValid)
@@ -40,6 +43,7 @@ namespace RBPServer.Controllers
             return Ok();
         }
 
+        [Route("Edit")]
         public IHttpActionResult Put(RecipeEdit recipe)
         {
             if (!ModelState.IsValid)
@@ -53,6 +57,7 @@ namespace RBPServer.Controllers
             return Ok();
         }
 
+        [Route("Delete")]
         public IHttpActionResult Delete(int id)
         {
             var service = CreateRecipeService();

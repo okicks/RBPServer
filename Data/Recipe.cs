@@ -20,5 +20,7 @@ namespace Data
         public string Description { get; set; }
 
         public bool IsStarred { get; set; }
+
+        public virtual ICollection<RecipeRating> RecipeRatings { get; set; }
     }
 }

@@ -71,7 +71,7 @@
     <Compile Include="Recipe\RecipeCreate.cs" />
     <Compile Include="Recipe\RecipeDetail.cs" />
     <Compile Include="Recipe\RecipeEdit.cs" />
-    <Compile Include="Recipe\RecipeListItems.cs" />
+    <Compile Include="Recipe\RecipeListItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
