@@ -17,14 +17,14 @@ namespace RBPServer.Controllers
         [Route("AllRecipes")]
         public IHttpActionResult GetAll()
         {
-            RecipeService recipeService = CreateRecipeService();
+            RecipeService recipeService = new RecipeService();
             var recipes = recipeService.GetRecipes();
             return Ok(recipes);
         }
 
         public IHttpActionResult Get(int id)
         {
-            RecipeService recipeService = CreateRecipeService();
+            RecipeService recipeService = new RecipeService();
             var recipe = recipeService.GetRecipeById(id);
             return Ok(recipe);
         }
@@ -35,7 +35,7 @@ namespace RBPServer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateRecipeService();
+            var service = new RecipeService();
 
             if (!service.CreateRecipe(recipe))
                 return InternalServerError();
@@ -49,7 +49,7 @@ namespace RBPServer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateRecipeService();
+            var service = new RecipeService();
 
             if (!service.UpdateRecipe(recipe))
                 return InternalServerError();
@@ -60,19 +60,12 @@ namespace RBPServer.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(int id)
         {
-            var service = CreateRecipeService();
+            var service = new RecipeService();
 
             if (!service.DeleteRecipe(id))
                 return InternalServerError();
 
             return Ok();
-        }
-
-        private RecipeService CreateRecipeService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var RecipeService = new RecipeService(userId);
-            return RecipeService;
         }
     }
 }

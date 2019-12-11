@@ -12,23 +12,6 @@ namespace Services
 {
     public class RecipeService
     {
-        private readonly Guid _userId;
-
-        public RecipeService(Guid userId)
-        {
-            _userId = userId;
-        }
-
-        //[HttpPost]
-        //public IHttpActionResult Create(RecipeCreate model)
-        //{
-        //    var userId = Guid.Parse(User.Identity.GetUserId());
-        //    var service = new RecipeService(userId);
-        //    service.CreateRecipe(model);
-        //    //route from Angular
-        //    return RedirectToRoute(string/* Recipes*/);
-        //}
-
         public bool CreateRecipe(RecipeCreate model)
         {
             var entity =
@@ -59,7 +42,6 @@ namespace Services
                             Name = e.Name,
                             Description = e.Description,
                             RecipeRatings = e.RecipeRatings,
-                            AverageRating = CalculateAverageRating(e.RecipeRatings)
                         }).ToArray();
                 
                 foreach (var recipe in recipeListItems)
@@ -74,6 +56,10 @@ namespace Services
 
         private double CalculateAverageRating(ICollection<RecipeRating> recipeRatings)
         {
+            if (recipeRatings == null || recipeRatings.Count == 0)
+            {
+                return 0;
+            }
             var sum = 0d;
             foreach (var rating in recipeRatings)
             {

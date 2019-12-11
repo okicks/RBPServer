@@ -18,7 +18,7 @@ namespace RBPServer.Controllers
         [Route ("AllLiquors")]
         public IHttpActionResult GetAll()
         {
-            LiquorService liquorService = CreateLiquorService();
+            LiquorService liquorService = new LiquorService();
             var liquors = liquorService.GetLiquors();
             return Ok(liquors);
         }
@@ -26,14 +26,14 @@ namespace RBPServer.Controllers
         [Route("Favorites")]
         public IHttpActionResult GetAllFavorites()
         {
-            LiquorService liquorService = CreateLiquorService();
+            LiquorService liquorService = new LiquorService();
             var faveliquors = liquorService.GetFaveLiquors();
             return Ok(faveliquors);
         }
 
         public IHttpActionResult GetLiquorById(int id)
         {
-            LiquorService liquorService = CreateLiquorService();
+            LiquorService liquorService = new LiquorService();
             var liquors = liquorService.GetLiquorById(id);
             return Ok(liquors);
         }
@@ -43,7 +43,7 @@ namespace RBPServer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateLiquorService();
+            var service = new LiquorService();
 
             if (!service.CreateLiquor(liquor))
                 return InternalServerError();
@@ -57,7 +57,7 @@ namespace RBPServer.Controllers
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            var service = CreateLiquorService();
+            var service = new LiquorService();
 
             if (!service.UpdateLiquor(liquor))
                 return InternalServerError();
@@ -67,19 +67,12 @@ namespace RBPServer.Controllers
         [Route("Delete")]
         public IHttpActionResult Delete(int id)
         {
-            var service = CreateLiquorService();
+            var service = new LiquorService();
 
             if (!service.DeleteLiquor(id))
                 return InternalServerError();
 
             return Ok();
-        }
-
-        private LiquorService CreateLiquorService()
-        {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var LiquorService = new LiquorService(userId);
-            return LiquorService;
         }
     }
 }

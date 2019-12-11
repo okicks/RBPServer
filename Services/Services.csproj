@@ -71,6 +71,7 @@
   <ItemGroup>
     <Compile Include="LiquorService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RatingService.cs" />
     <Compile Include="RecipeService.cs" />
   </ItemGroup>
   <ItemGroup>

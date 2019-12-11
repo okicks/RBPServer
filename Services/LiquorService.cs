@@ -11,13 +11,6 @@ namespace Services
 {
     public class LiquorService
     {
-        private readonly Guid _userId;
-
-        public LiquorService(Guid userId)
-        {
-            _userId = userId;
-        }
-
         public bool CreateLiquor(LiquorCreate model)
         {
             var entity =
@@ -68,7 +61,6 @@ namespace Services
                     {
                         Id = e.Id,
                         Name = e.Name,
-                        AverageRating = AverageLiquorRating(e.LiquorRatings)
                     }).ToArray();
 
                 foreach (var liquor in liquorListItems)
@@ -81,6 +73,11 @@ namespace Services
         }
         private double AverageLiquorRating(ICollection<LiquorRating> liquorRatings)
         {
+            if (liquorRatings == null || liquorRatings.Count == 0)
+            {
+                return 0;
+            }
+
             var sum = 0d;
             foreach (var rating in liquorRatings)
             {
