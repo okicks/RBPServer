@@ -17,6 +17,7 @@ using Microsoft.Owin.Security.OAuth;
 using RBPServer.Models;
 using RBPServer.Providers;
 using RBPServer.Results;
+using System.Web.Http.Cors;
 
 namespace RBPServer.Controllers
 {
