@@ -9,10 +9,11 @@ using System.Web.Http;
 
 namespace RBPServer.Controllers
 {
+    [RoutePrefix("api/Rating")]
     [Authorize]
     public class RatingController : ApiController
     {
-        // GET: Rating
+        [Route("Liquor")]
         public IHttpActionResult Post(CreateLiquorRating rating)
         {
             if (!ModelState.IsValid)
@@ -25,6 +26,19 @@ namespace RBPServer.Controllers
 
             return Ok();
         }
+        [Route("Recipe")]
+        public IHttpActionResult Post(CreateRecipeRating rating)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var service = CreateRatingService();
+
+            if (!service.CreateRecipeRating(rating))
+                return InternalServerError();
+
+            return Ok();
+        }
 
         private RatingService CreateRatingService()
         {
@@ -32,5 +46,6 @@ namespace RBPServer.Controllers
             var RatingService = new RatingService(userId);
             return RatingService;
         }
+
     }
 }

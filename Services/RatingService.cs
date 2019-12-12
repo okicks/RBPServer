@@ -32,5 +32,22 @@ namespace Services
                 return ctx.SaveChanges() == 1;
             }
         }
+
+        public bool CreateRecipeRating(CreateRecipeRating model)
+        {
+            var entity =
+                new RecipeRating()
+                {
+                    Rater = _userId,
+                    RecipeId = model.RecipeId,
+                    Rating = model.Rating
+                };
+
+            using (var ctx = new ApplicationDbContext())
+            {
+                ctx.RecipeRatings.Add(entity);
+                return ctx.SaveChanges() == 1;
+            }
+        }
     }
 }
