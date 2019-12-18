@@ -12,23 +12,6 @@ namespace Services
 {
     public class RecipeService
     {
-        private readonly Guid _userId;
-
-        public RecipeService(Guid userId)
-        {
-            _userId = userId;
-        }
-
-        //[HttpPost]
-        //public IHttpActionResult Create(RecipeCreate model)
-        //{
-        //    var userId = Guid.Parse(User.Identity.GetUserId());
-        //    var service = new RecipeService(userId);
-        //    service.CreateRecipe(model);
-        //    //route from Angular
-        //    return RedirectToRoute(string/* Recipes*/);
-        //}
-
         public bool CreateRecipe(RecipeCreate model)
         {
             var entity =

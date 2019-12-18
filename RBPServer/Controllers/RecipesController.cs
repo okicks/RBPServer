@@ -22,6 +22,7 @@ namespace RBPServer.Controllers
             return Ok(recipes);
         }
 
+        [Route("Recipe")]
         public IHttpActionResult Get(int id)
         {
             RecipeService recipeService = CreateRecipeService();
@@ -70,8 +71,7 @@ namespace RBPServer.Controllers
 
         private RecipeService CreateRecipeService()
         {
-            var userId = Guid.Parse(User.Identity.GetUserId());
-            var RecipeService = new RecipeService(userId);
+            var RecipeService = new RecipeService();
             return RecipeService;
         }
     }
