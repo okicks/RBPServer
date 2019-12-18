@@ -11,13 +11,6 @@ namespace Services
 {
     public class LiquorService
     {
-        private readonly Guid _userId;
-
-        public LiquorService(Guid userId)
-        {
-            _userId = userId;
-        }
-
         public bool CreateLiquor(LiquorCreate model)
         {
             var entity =
@@ -36,21 +29,6 @@ namespace Services
             }
         }
 
-        public IEnumerable<LiquorListItem> GetLiquors()
-        {
-            using (var ctx = new ApplicationDbContext())
-            {
-                var query =
-                    ctx.Liquors
-                    .Select(e => new LiquorListItem
-                    {
-                        Id = e.Id,
-                        Name = e.Name,
-                    });
-
-                return query.ToArray();
-            }
-        }
 
         public IEnumerable<FavoriteLiquorsListItem> GetFaveLiquors()
         {
@@ -68,9 +46,47 @@ namespace Services
                         IsStarred = e.IsStarred
                     });
 
-                return query.ToArray(); 
+                return query.ToArray();
             }
         }
+
+        public IEnumerable<LiquorListItem> GetLiquors()
+        {
+            using (var ctx = new ApplicationDbContext())
+            {
+                var liquorListItems =
+                    ctx
+                    .Liquors
+                    .Select(e => new LiquorListItem
+                    {
+                        Id = e.Id,
+                        Name = e.Name,
+                    }).ToArray();
+
+                foreach (var liquor in liquorListItems)
+                {
+                    liquor.AverageRating = AverageLiquorRating(liquor.LiquorRatings);
+                }
+
+                return liquorListItems;
+            }
+        }
+        private double AverageLiquorRating(ICollection<LiquorRating> liquorRatings)
+        {
+            if (liquorRatings == null || liquorRatings.Count == 0)
+            {
+                return 0;
+            }
+
+            var sum = 0d;
+            foreach (var rating in liquorRatings)
+            {
+                sum += rating.Rating;
+            }
+
+            return sum / liquorRatings.Count();
+        }
+
         public LiquorDetail GetLiquorById(int id)
         {
             using (var ctx = new ApplicationDbContext())

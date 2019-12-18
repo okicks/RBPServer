@@ -38,5 +38,7 @@ namespace Data
 
         [Required]
         public string Origin { get; set; }
+
+        public virtual ICollection<LiquorRating> LiquorRatings { get; set; }
     }
 }

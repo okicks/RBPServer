@@ -64,10 +64,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Favorites\FavoriteLiquorsListItem.cs" />
+    <Compile Include="Favorites\FavoriteRecipesListItem.cs" />
     <Compile Include="Liquor\LiquorCreate.cs" />
     <Compile Include="Liquor\LiquorDetail.cs" />
     <Compile Include="Liquor\LiquorEdit.cs" />
     <Compile Include="Liquor\LiquorListItem.cs" />
+    <Compile Include="Ratings\CreateLiquorRating.cs" />
+    <Compile Include="Ratings\CreateRecipeRating.cs" />
     <Compile Include="Recipe\RecipeCreate.cs" />
     <Compile Include="Recipe\RecipeDetail.cs" />
     <Compile Include="Recipe\RecipeEdit.cs" />
